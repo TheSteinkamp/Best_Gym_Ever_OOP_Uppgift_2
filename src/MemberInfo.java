@@ -51,7 +51,8 @@ public class MemberInfo {
         LocalDate now = LocalDate.now();
         try {
             for (Members m : allMembers) {
-                if (input.equals(m.getName()) || input.equals(String.valueOf(m.getSsn()))) {
+                if (input.equalsIgnoreCase(m.getName()) || input.equalsIgnoreCase(String.valueOf(m.getSsn()))
+                        || reverseName(input).equalsIgnoreCase(m.getName().toLowerCase())) {
                     if (lengthOfTime(now, m.getLastPayment())) {
                         System.out.println(m.getName());
                         System.out.println(saveToFileFromList(m, writeString));
@@ -108,4 +109,14 @@ public class MemberInfo {
         }
         return "Programmet avslutat";
     }
+    //Metod där vi tar inmatningen från användaren och kollar om vi kör i testläge eller inte innan vi kör resterande av programmet
+
+    public String reverseName(String input) {
+        if (input.contains(" ")) {
+            String[] text = input.split(" ", 2); // delar input texten på första mellanslaget
+            return text[1].trim() + " " + text[0].trim();
+        } else return input;
+    }
+    // metod som i inparameter tar en string och om stringen innehåller ett mellanslag så delar vi uppp den och vänder på strängen,
+    // så det funkar att söka även om vi skriver in efternamnet först
 }

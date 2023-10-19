@@ -1,9 +1,11 @@
 import org.junit.jupiter.api.Test;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class MemberInfoTest {
@@ -75,5 +77,16 @@ class MemberInfoTest {
         String text = "hej";
         assert (Objects.equals(mi.inputFromUser(text), "Slut på testet"));
     }
-    //Metod som kollar av inmatningen och gör att vi kan köra testerna för sig otan att vänta på inmatning från användaren
+    //Metod som kollar av inmatningen och gör att vi kan köra testerna för sig utan att vänta på inmatning från användaren
+
+    @Test
+    public void reverseNameTest() {
+        String rightName = "Janne Ek";
+        String reverseName = "Ek Janne";
+        String wrongName = "Ek";
+        assertTrue(Objects.equals(mi.reverseName(rightName), reverseName));
+        assertFalse(Objects.equals(mi.reverseName(rightName), wrongName));
+    }
+    // metod som i inparameter tar en string och om stringen innehåller ett mellanslag så delar vi uppp den och vänder på strängen,
+    // så det funkar att söka även om vi skriver in efternamnet först
 }
