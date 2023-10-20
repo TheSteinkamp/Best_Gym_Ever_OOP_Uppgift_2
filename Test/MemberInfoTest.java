@@ -18,6 +18,7 @@ class MemberInfoTest {
     public void saveToListFromFileTest() {
         testMembers = mi.saveToListFromFile(readPath);
         assertEquals(3, testMembers.size());
+        assertEquals("Bear Belle", testMembers.get(1).getName());
     }
     // metod som i inparameter tar en string med filen man ska läsa till och sen i metoden går igenom två rader i taget och sparar till
     // objektet member och sedan lägger in alla objekten i en lista.
@@ -75,7 +76,7 @@ class MemberInfoTest {
     public void inputFromUserTest() {
         MemberInfo.isTest = true;
         String text = "hej";
-        assert (Objects.equals(mi.inputFromUser(text), "Slut på testet"));
+        assert (Objects.equals(mi.inputFromUser(text), "Test avslutat"));
     }
     //Metod som kollar av inmatningen och gör att vi kan köra testerna för sig utan att vänta på inmatning från användaren
 
@@ -84,8 +85,8 @@ class MemberInfoTest {
         String rightName = "Janne Ek";
         String reverseName = "Ek Janne";
         String wrongName = "Ek";
-        assertTrue(Objects.equals(mi.reverseName(rightName), reverseName));
-        assertFalse(Objects.equals(mi.reverseName(rightName), wrongName));
+        assertEquals(mi.reverseName(rightName), reverseName);
+        assertNotEquals(mi.reverseName(rightName), wrongName);
     }
     // metod som i inparameter tar en string och om stringen innehåller ett mellanslag så delar vi uppp den och vänder på strängen,
     // så det funkar att söka även om vi skriver in efternamnet först

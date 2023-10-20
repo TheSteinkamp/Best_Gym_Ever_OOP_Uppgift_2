@@ -18,9 +18,9 @@ public class MemberInfo {
         String line1;
         String line2;
         try (Scanner scan = new Scanner(new FileReader(readString))) {
-            while (scan.hasNextLine()) { // om det finns en till rad i scanner objektet vi skickade in gör vi följande
+            while (scan.hasNextLine()) {
                 Members m = new Members();
-                line1 = scan.nextLine(); // scannar den raden och nästa till två variabler
+                line1 = scan.nextLine();
                 String[] tempArray = line1.split(",");
                 m.setSsn(Long.parseLong(tempArray[0].trim()));
                 m.setName(tempArray[1].trim());
@@ -46,6 +46,25 @@ public class MemberInfo {
         return LocalDate.of(year, month, day);
     }
     // metod som tar en string i inparameter och returnerar ett LocalDate
+
+    public String inputFromUser(String testText) {
+        if (isTest) {
+            scan = new Scanner(testText);
+            return "Test avslutat";
+        } else {
+            scan = new Scanner(System.in);
+            while (true) {
+                System.out.println("Skriv in personnummer eller för och efternamn, tryck på enter för att avsluta: ");
+                String answer = scan.nextLine();
+                if (answer.isEmpty()) {
+                    break;
+                }
+                System.out.println(searchInList(allMembers, answer));
+            }
+        }
+        return "Programmet avslutat";
+    }
+    //Metod där vi tar inmatningen från användaren och kollar om vi kör i testläge eller inte innan vi kör resterande av programmet
 
     public String searchInList(List<Members> allMembers, String input) {
         LocalDate now = LocalDate.now();
@@ -81,35 +100,16 @@ public class MemberInfo {
         LocalDate ld = LocalDate.now();
 
         try (PrintWriter pr = new PrintWriter(new FileWriter(writeString, true))) {
-            pr.println(m.getName() + " har besökt gymet " + ld);
+            pr.println(m.getName() + ", " + m.getSsn() + ", har besökt gymet " + ld);
         } catch (FileNotFoundException e) {
             System.out.println("Filen hittas inte");
         } catch (IOException e) {
             System.out.println("Något gick fel");
         }
-        return m.getName() + " Har besökt gymet " + ld;
+        return m.getName() + " har besökt gymet " + ld;
     }
     // metod som i inparameter tar ett objekt av typen Member från när man söker ovan och en string dit vi ska spara infon och lägger det i
     // en ny fil med de medlemmar som är aktiva. Den här metoden används alltså i metoden ovan
-
-    public String inputFromUser(String testText) {
-        if (isTest) {
-            scan = new Scanner(testText);
-            return "Slut på testet";
-        } else {
-            scan = new Scanner(System.in);
-            while (true) {
-                System.out.println("Skriv in personnummer eller namn, tryck på enter för att avsluta: ");
-                String answer = scan.nextLine();
-                if (answer.isEmpty()) {
-                    break;
-                }
-                System.out.println(searchInList(allMembers, answer));
-            }
-        }
-        return "Programmet avslutat";
-    }
-    //Metod där vi tar inmatningen från användaren och kollar om vi kör i testläge eller inte innan vi kör resterande av programmet
 
     public String reverseName(String input) {
         if (input.contains(" ")) {
